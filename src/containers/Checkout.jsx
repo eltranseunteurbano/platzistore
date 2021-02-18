@@ -5,7 +5,7 @@ import '../styles/components/Checkout.css';
 
 const Checkout = () => {
   const {
-    state: { products, cart },
+    state: { cart },
     removeFromCart,
   } = useContext(AppContext);
 
@@ -20,7 +20,7 @@ const Checkout = () => {
         {cart.length > 0 ? (
           cart.map((item) => {
             return (
-              <div className="Checkout-item">
+              <div className="Checkout-item" key={item.id}>
                 <div className="Checkout-element">
                   <h4>{item.title}</h4>
                   <span>${item.price}</span>
