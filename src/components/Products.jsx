@@ -1,13 +1,39 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from '../context/AppContext';
 import Product from './Product';
 
-const Products = ({ products }) => {
+const Products = () => {
+  const {
+    state: { products, cart },
+    addToCart,
+    removeFromCart,
+  } = useContext(AppContext);
+
+  const handleAddToCart = (product) => () => {
+    addToCart(product);
+  };
+
+  const handleDeleteCart = (product) => () => {
+    removeFromCart(product);
+  };
+
   return (
     <div className="Products">
       <div className="Products-items">
-        {products.map((product) => (
-          <Product key={product.id} product={product} />
-        ))}
+        {products.map((product) => {
+          const isProductInShoppingCart = !!cart.find(
+            (item) => item.id === product.id
+          );
+          return (
+            <Product
+              key={product.id}
+              product={product}
+              handleAddToCart={handleAddToCart}
+              handleDeleteCart={handleDeleteCart}
+              isProductInShoppingCart={isProductInShoppingCart}
+            />
+          );
+        })}
       </div>
     </div>
   );

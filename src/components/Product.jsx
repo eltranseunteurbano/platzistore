@@ -1,7 +1,12 @@
 import React from 'react';
 import '../styles/components/Products.css';
 
-const Product = ({ product }) => {
+const Product = ({
+  product,
+  handleAddToCart,
+  handleDeleteCart,
+  isProductInShoppingCart,
+}) => {
   const { image, title, price, description } = product;
 
   return (
@@ -13,7 +18,19 @@ const Product = ({ product }) => {
         </h2>
         <p>{description}</p>
       </div>
-      <button type="button">Comprar</button>
+      {isProductInShoppingCart ? (
+        <button
+          type="button"
+          className="delete"
+          onClick={handleDeleteCart(product)}
+        >
+          Eliminar
+        </button>
+      ) : (
+        <button type="button" onClick={handleAddToCart(product)}>
+          Comprar
+        </button>
+      )}
     </div>
   );
 };

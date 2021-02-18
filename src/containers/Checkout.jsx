@@ -1,24 +1,44 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from '../context/AppContext';
 import { Link } from 'react-router-dom';
 import '../styles/components/Checkout.css';
 
 const Checkout = () => {
+  const {
+    state: { products, cart },
+    removeFromCart,
+  } = useContext(AppContext);
+
+  const handleDeleteCart = (product) => () => {
+    removeFromCart(product);
+  };
+
   return (
     <div className="Checkout">
       <div className="Checkout-content">
         <h3>Lista de pedidos:</h3>
-        <div className="Checkout-item">
-          <div className="Checkout-element">
-            <h4>Item name</h4>
-            <span>$10</span>
-          </div>
-          <button type="button">
-            <i className="fas fa-trash-alt" />
-          </button>
-        </div>
+        {cart.length > 0 ? (
+          cart.map((item) => {
+            return (
+              <div className="Checkout-item">
+                <div className="Checkout-element">
+                  <h4>{item.title}</h4>
+                  <span>${item.price}</span>
+                </div>
+                <button type="button" onClick={handleDeleteCart(item)}>
+                  <i className="fas fa-trash-alt" />
+                </button>
+              </div>
+            );
+          })
+        ) : (
+          <p>No tienes productos en el carro de compras</p>
+        )}
       </div>
       <div className="Checkout-sidebar">
-        <h3>Precio Total: $10</h3>
+        <h3>
+          Precio Total: ${cart.reduce((acc, curr) => acc + curr.price, 0)}
+        </h3>
         <Link to="/checkout/information">
           <button type="button">Continuar pedido</button>
         </Link>

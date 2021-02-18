@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from '../context/AppContext';
 import { Link } from 'react-router-dom';
 import '../styles/components/Information.css';
 
 const Information = () => {
+  const {
+    state: { cart },
+  } = useContext(AppContext);
+
   return (
     <div className="Information">
       <div className="Information-content">
@@ -31,12 +36,14 @@ const Information = () => {
       </div>
       <div className="Information-sidebar">
         <h3>Pedido:</h3>
-        <div className="Information-item">
-          <div className="Information-element">
-            <h4>Item name</h4>
-            <span>$10</span>
+        {cart.map((item) => (
+          <div className="Information-item">
+            <div className="Information-element">
+              <h4>{item.title}</h4>
+              <span>${item.price}</span>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

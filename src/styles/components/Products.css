@@ -44,6 +44,9 @@
   font-size: 14px;
   font-weight: 300;
 }
+.Products-item .delete {
+  background: linear-gradient(to bottom, #ee6363 5%, #cf4646 100%);
+}
 .Products-item button:hover {
   background-color: rgba(39,44,49,0.06);
 }
